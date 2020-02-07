@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { Component } from 'react';
 
 import './App.css';
 import FavoriteMovies from './FavoriteMovies';
-
+import Dashboard from './Dashboard';
 const profiles = [
   {
     id: 1,
@@ -91,20 +91,40 @@ const movies = {
   },
 };
 
-function App() {
-  return (
-    <div className="App">
-      <header className='header'>
-        <h1>Welcome to Udacity React Nanodegree Practicals</h1>
-      </header>
-      <div className='main'>
-        <FavoriteMovies
-        profiles={profiles} 
-        users={users}
-        movies={movies}/>
+class App extends Component {
+  constructor(props){
+    super(props)
+    this.usersByMovie = {}
+    profiles.forEach(profile => {
+      const movieId = profile.favoriteMovieID;
+      if(this.usersByMovie[movieId]) {
+        this.usersByMovie[movieId].push(profile.userID)
+      } else {
+        this.usersByMovie[movieId] = [profile.userID]
+      }
+    })
+  }
+  render(){
+    return (
+      <div className="App">
+        <header className='header'>
+          <h1>Welcome to Udacity React Nanodegree Practicals</h1>
+        </header>
+        <div className='main'>
+          <FavoriteMovies
+          profiles={profiles} 
+          users={users}
+          movies={movies}/>
+          <Dashboard
+          profiles={profiles}
+          users={users}
+          movies={movies}
+          usersByMovie={this.user}
+          />
+        </div>
       </div>
-    </div>
-  );
+    );
+  }
 }
 
 export default App;
