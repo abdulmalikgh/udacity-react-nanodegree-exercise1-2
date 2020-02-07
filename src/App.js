@@ -119,7 +119,7 @@ class App extends Component {
           profiles={profiles}
           users={users}
           movies={movies}
-          usersByMovie={this.user}
+          usersByMovie={this.usersByMovie}
           />
         </div>
       </div>
